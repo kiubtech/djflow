@@ -8,8 +8,8 @@ Al descargar el proyecto encontraremos un archivo llamado "requirements.txt" el 
 
 Ejecutamos lo siguiente: 
 
-`[kiubtech]$ pip install -r requirements
-`
+    [kiubtech]$ pip install -r requirements
+
 
 # Configuración.
 
@@ -46,13 +46,13 @@ Y también sus credenciales de envío de correos electrónicos.
 
 Ejecutamos las migraciones para crear la base de datos: 
 
-`[kiubtech]$ python manage.py migrate
-`
+    [kiubtech]$ python manage.py migrate
+
 
 y posteriormente generamos nuestro super usuario. 
 
-`[kiubtech]$ python manage.py createsuperuser
-`
+    [kiubtech]$ python manage.py createsuperuser
+
 
 Listo! Esto debe ser todo lo necesario para que tengan corriendo el proyecto en sus equipos locales. 
 
@@ -61,10 +61,10 @@ Listo! Esto debe ser todo lo necesario para que tengan corriendo el proyecto en 
 Agradecemos enormemente el esfuerzo de las comunidades que mantienen el desarrollo de los siguientes proyectos.
 
 - [Django Project](https://www.djangoproject.com)
-- [PostGreSQL](https://www.postgresql.org/)
-- [Psycopg2](https://github.com/psycopg/psycopg2)
 - [Django Solo](https://github.com/lazybird/django-solo)
 - [Pillow](https://github.com/python-pillow/Pillow)
+- [PostGreSQL](https://www.postgresql.org/)
+- [Psycopg2](https://github.com/psycopg/psycopg2)
 
 
 # Licenciamiento.
