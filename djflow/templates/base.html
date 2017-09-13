@@ -44,7 +44,7 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a class="nav-link  {% block nav_dashboard %}{% endblock %}" href="/">Dashboard</a>
+                    <a class="nav-link  {% block nav_dashboard %}{% endblock %}" href="{% url 'flow:dashboard' %}">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% block nav_transac %}{% endblock %}" href="{% url 'flow:transaction-list' %}">{% trans 'Transacciones' %}</a>
