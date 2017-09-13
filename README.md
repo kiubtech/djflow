@@ -8,7 +8,7 @@ Al descargar el proyecto encontraremos un archivo llamado "requirements.txt" el 
 
 Ejecutamos lo siguiente: 
 
-    [kiubtech]$ pip install -r requirements
+    [kiubtech]$ pip install -r requirements.txt
 
 
 # Configuración.
