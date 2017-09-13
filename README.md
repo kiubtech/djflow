@@ -42,7 +42,7 @@ Y también sus credenciales de envío de correos electrónicos.
         "CONTACT_EMAIL": "my-mail@gmail.com"
       }
 
-# Iniciando Base de datos y proyecto.
+# Iniciando base de datos y proyecto.
 
 Ejecutamos las migraciones para crear la base de datos: 
 
