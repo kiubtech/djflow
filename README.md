@@ -42,7 +42,7 @@ Y también sus credenciales de envío de correos electrónicos.
         "CONTACT_EMAIL": "my-mail@gmail.com"
       }
 
-# Iniciando Base de datos.
+# Iniciando Base de datos y proyecto.
 
 Ejecutamos las migraciones para crear la base de datos: 
 
@@ -54,7 +54,9 @@ y posteriormente generamos nuestro super usuario.
     [kiubtech]$ python manage.py createsuperuser
 
 
-Listo! Esto debe ser todo lo necesario para que tengan corriendo el proyecto en sus equipos locales. 
+Listo! Esto debe ser todo lo necesario para que tengan corriendo el proyecto en sus equipos locales: 
+
+    [kiubtech]$ python manage.py runserver
 
 # Powered by Open Source Projects. 
 
