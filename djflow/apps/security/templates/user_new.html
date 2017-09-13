@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load i18n static add_class %}
+{% block title %}{% trans 'Usuarios' %}{% endblock %}
+{% block page-title %}{% trans 'Nuevo usuario' %}{% endblock %}
+{% block nav_users %}active{% endblock %}
+{% block content %}
+    <form action="." method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_first_name">{% trans 'Nombre(s)' %}</label>
+                    <input id="id_first_name" name="first_name" class="form-control" autofocus required {% if last_name %}value="{{ last_name }}" {% endif %}>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_last_name">{% trans 'Apellido(s)' %}</label>
+                    <input id="id_last_name" name="last_name" class="form-control" required {% if first_name %}value="{{ first_name }}" {% endif %}>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_email">{% trans 'Correo electrónico' %}</label>
+                    <input id="id_email" name="email" type="email" class="form-control" {% if email %}value="{{ email }}" {% endif %}
+                           required>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_password">{% trans 'Contraseña' %}</label>
+                    <input id="id_password" name="password" required value="{{ random_password }}"
+                           class="form-control">
+                </div>
+            </div>
+        </div>
+    <div class="text-right">
+        <a href="{% url 'security:user-list' %}" class="btn btn-secondary">{% trans 'Regresar' %}</a>
+        <input class="btn btn-outline-primary" type="submit" value="{% trans 'Guardar' %}">
+    </div>
+    </form>
+{% endblock content %}

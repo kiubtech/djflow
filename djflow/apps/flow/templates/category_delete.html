@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n static add_class %}
+{% block title %}{% trans 'Eliminar categoría' %}{% endblock %}
+{% block page-title %}{% trans 'Eliminar categoría' %}{% endblock %}
+{% block nav_cuentas %}active{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+        <h3 class="text-center">{% trans '¿Seguro que deseas eliminar este elemento?' %}</h3>
+        <form action="." method="post">
+            {% csrf_token %}
+
+            <p class="text-center">
+                <a href="{% url 'flow:category-list' %}" class="btn btn-secondary">{% trans 'Regresar' %}</a>
+                <input class="btn btn-danger" type="submit" value="{% trans 'Eliminar' %}">
+            </p>
+
+        </form>
+    </div>
+
+{% endblock content %}

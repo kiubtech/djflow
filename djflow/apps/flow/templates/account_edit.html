@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n static add_class %}
+{% block title %}{% trans 'Cuentas' %}{% endblock %}
+{% block page-title %}{% trans 'Editar cuenta' %}{% endblock %}
+{% block nav_cuentas %}active{% endblock %}
+{% block content %}
+    <form action="." method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+            <p>{{ field|add_class:"form-control" }}</p>
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            {% endif %}
+    {% endfor %}
+        <br>
+    <div class="text-right">
+        <a href="{% url 'flow:account-list' %}" class="btn btn-secondary">{% trans 'Regresar' %}</a>
+    <input class="btn btn-outline-primary" type="submit" value="{% trans 'Guardar' %}">
+    </div>
+    </form>
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans 'Login' %}</title>
+    <link rel="stylesheet" href="{% static 'libs/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" method="post" action=".">
+
+             <img src="{% static 'img/cashflow.png' %}" class="img-responsive" style="display: block;margin: auto" alt="">
+             <h2 class="form-signin-heading text-center">{% trans 'Ingresar' %}</h2>
+
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+        <!-- Email -->
+        <label for="{{ form.email.id }}"> {{ form.email.label }}</label><br>
+        <input type="email" name="email" id="id_email" class="form-control" placeholder="{% trans 'Email' %}">
+        {% if form.email.errors %}
+            {% for error  in form.email.errors %}
+                <div>
+                    <small>{{ error }}</small>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <!-- Finaliza Email -->
+        <!-- Password -->
+        <label for="{{ form.password.id }}"> {{ form.password.label }}</label><br>
+        <input type="password" name="password" class="form-control" id="id_password"
+               placeholder="{% trans 'Contraseña' %}">
+        {% if form.password.errors %}
+            {% for error  in form.password.errors %}
+                <div>
+                    <small>{{ error }}</small>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <!-- Fin Password -->
+        <button class="btn btn-primary btn-block" type="submit">{% trans 'Ingresar' %}</button>
+        <a href="/" class="btn-link pull-right"><small>{% trans 'Regresar' %}</small></a>
+    </form>
+</div> <!-- /container -->
+
+<script src="{% static 'libs/jquery/jquery-3.2.1.slim.min.js' %}"></script>
+<script src="{% static 'libs/popper/popper.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load i18n static humanize %}
+{% block title %}{% trans 'Transacciones' %}{% endblock %}
+{% block page-title %}{% trans 'Transacciones' %}{% endblock %}
+{% block nav_transac %}active{% endblock %}
+{% block add-button %}
+     <a href="{% url 'flow:transaction-new' %}" class="btn btn-outline-primary"><i class="fa fa-plus"></i> {% trans 'Nuevo' %}</a>
+{% endblock %}
+{% block content %}
+    {% if object_list %}
+        <table class="table table-sm">
+        <thead class="thead-inverse text-center">
+            <tr>
+                <th width="10%" align="center">{% trans 'Registrador' %}</th>
+                <th width="35%" align="center">{% trans 'Nombre' %}</th>
+                <th width="2%"></th>
+                <th width="10%" align="center">{% trans 'Monto' %}</th>
+                <th width="10%" align="center">{% trans 'Fecha' %}</th>
+                <th width="8%"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for element in object_list %}
+            <tr>
+                <td>{{ element.created_by.first_name }} {{ element.created_by.last_name }}</td>
+                <td>
+                    <a href="{% url 'flow:transaction-edit' element.pk %}">{{ element.name }}</a>
+                    <p class="text-gray-dark">
+                        <small><b>{% trans 'Categoría' %}</b>: {{ element.category.name }}</small>
+                        <br>
+                        <small><b>{% trans 'Cuenta' %}</b>: {{ element.account.name }}</small>
+                    </p>
+                </td>
+                <td>$</td>
+                <td align="right">{{ element.amount|floatformat:2|intcomma }}</td>
+                <td align="center">{{ element.date|date:"d/M/Y" }}</td>
+                <td>
+                    <a href="{% url 'flow:transaction-comment-list' %}?transaction={{ element.id }}" class="btn btn-sm btn-primary"><i class="fa fa-comments-o"></i> </a>
+                    <a href="{% url 'flow:transaction-delete' element.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'includes/paginator.html' with url_list='/flow/transaction/list/' %}
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <span>{% trans 'Parece que aún no hay transacciones registradas' %}</span>
+        </div>
+    {% endif %}
+{% endblock content %}

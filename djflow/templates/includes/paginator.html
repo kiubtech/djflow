@@ -1,0 +1,17 @@
+{% load i18n %}
+{% if is_paginated %}
+    <hr>
+    <div class="pull-left">
+                <span>{% trans 'Página' %} {{ page_obj.number }} {% trans 'de' %} {{ page_obj.paginator.num_pages }}</span>
+            </div>
+    <nav>
+        <ul class="pagination justify-content-end">
+            <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                <a class="page-link" href="{% if page_obj.has_previous %}{{ url_list }}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}" tabindex="-1">{% trans 'Anterior' %}</a>
+            </li>
+            <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+                <a class="page-link" href="{% if page_obj.has_next %}{{ url_list }}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}" tabindex="-1">{% trans 'Siguiente' %}</a>
+            </li>
+        </ul>
+    </nav>
+{% endif %}

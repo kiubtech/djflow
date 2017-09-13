@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n static add_class %}
+{% block title %}{% trans 'Transacciones' %}{% endblock %}
+{% block page-title %}{% trans 'Nueva transacción' %}{% endblock %}
+{% block nav_transac %}active{% endblock %}
+{% block content %}
+    <form action="." method="post">
+        {% csrf_token %}
+        <div class="row">
+            {% for field in form %}
+                <div class="col-6">
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    {% if field.auto_id == "id_date" %}
+                        <p>{{ field|add_class:"form-control datepicker" }}</p>
+                    {% else %}
+                        <p>{{ field|add_class:"form-control" }}</p>
+                    {% endif %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="text-right">
+            <a href="{% url 'flow:transaction-list' %}" class="btn btn-secondary">{% trans 'Regresar' %}</a>
+            <input class="btn btn-outline-primary" type="submit" value="{% trans 'Guardar' %}">
+        </div>
+    </form>
+{% endblock content %}

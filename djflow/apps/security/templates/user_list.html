@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% block title %}{% trans 'Usuarios' %}{% endblock %}
+{% block page-title %}{% trans 'Usuarios' %}{% endblock %}
+{% block nav_users %}active{% endblock %}
+{% block add-button %}
+     <a href="{% url 'security:user-new' %}" class="btn btn-outline-primary"><i class="fa fa-plus"></i> {% trans 'Nuevo' %}</a>
+{% endblock %}
+{% block content %}
+    <table class="table table-sm">
+        <thead class="thead-inverse text-center">
+            <tr>
+                <th width="30%" align="center">{% trans 'Email' %}</th>
+                <th width="15%" align="center">{% trans 'Nombre(s)' %}</th>
+                <th width="15%" align="center">{% trans 'Apellido(s)' %}</th>
+                <th width="15%" align="center">{% trans 'Activo' %}</th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for element in object_list %}
+            <tr>
+                <td>{{ element.user.email }} {% if user == element.user %}({% trans 'Yo' %}){% endif %}</td>
+                <td>{{ element.user.first_name }}</td>
+                <td>{{ element.user.last_name }}</td>
+                <td>
+                {% if user != element.user %}
+                <a href="{% url 'security:user-active-inactive' element.user.id %}">
+                    {% if element.user.is_active %}
+                        <i class="fa fa-toggle-on fa-2x text-success"></i>
+                    {% else %}
+                        <i class="fa fa-toggle-off fa-2x text-secondary"></i>
+                    {% endif %}
+                </a>
+                {% else %}
+                    <i class="fa fa-toggle-on fa-2x text-success"></i>
+                {% endif %}
+                </td>
+                <td><a {% if user == element.user %}disabled{% endif %} href="{% if user != element.user %}{% url 'security:user-delete' element.pk %}{% else %}#{% endif %}" class="btn {% if user != element.user %}btn-danger{% else %} btn-secondary {% endif %} btn-sm"><i class="fa fa-trash"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'includes/paginator.html' with url_list='/security/transaction/list/' %}
+{% endblock content %}

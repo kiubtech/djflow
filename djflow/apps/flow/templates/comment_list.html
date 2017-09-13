@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n static humanize %}
+{% block title %}{% trans 'Comentarios de transacción' %}{% endblock %}
+{% block page-title %}{% trans 'Comentarios de la transacción' %}{% endblock %}
+{% block nav_transac %}active{% endblock %}
+{% block add-button %}
+     <a href="{% url 'flow:transaction-new' %}" class="btn btn-outline-primary" data-toggle="modal" data-target="#add-comment"><i class="fa fa-plus"></i> {% trans 'Nuevo' %}</a>
+{% endblock %}
+{% block content %}
+    {% if object_list %}
+        <div class="card widget">
+            <div class="card-header">
+{#                <h3 class="panel-title">{% trans 'Comentarios' %}</h3>#}
+            </div>
+            <div class="card-block" style="padding: 0">
+                {% include 'includes/comment_list_widget.html' with list_comments=object_list %}
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <span>{% trans 'Parece que aún no hay transacciones registradas' %}</span>
+        </div>
+    {% endif %}
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="add-comment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="{% url 'flow:transaction-comment-new' transaction.id %}" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans 'Nuevo comentario' %}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                        {% csrf_token %}
+                        <textarea name="comment" class="form-control" id="" cols="30" rows="10" placeholder="{% trans 'Escribe tu comentario...' %}"></textarea>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">{% trans 'Comentar' %}</button>
+                </div>
+            </div>
+                </form>
+        </div>
+    </div>
+
+{% endblock content %}

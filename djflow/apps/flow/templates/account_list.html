@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% block title %}{% trans 'Cuentas' %}{% endblock %}
+{% block page-title %}{% trans 'Cuentas' %}{% endblock %}
+{% block nav_cuentas %}active{% endblock %}
+{% block add-button %}
+     <a href="{% url 'flow:account-new' %}" class="btn btn-outline-primary"><i class="fa fa-plus"></i> {% trans 'Nuevo' %}</a>
+{% endblock %}
+{% block content %}
+    {% if object_list %}
+        <table class="table table-sm">
+            <thead class="thead-inverse">
+            <tr>
+                <th>{% trans 'Nombre' %}</th>
+                <th>{% trans 'Descripción' %}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in object_list %}
+                <tr>
+                    <td><a href="{% url 'flow:account-edit' element.pk %}">{{ element.name }}</a></td>
+                    <td>{{ element.description }}</td>
+                    <td><a href="{% url 'flow:account-delete' element.pk %}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-trash"></i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% include 'includes/paginator.html' with url_list='/flow/account/list/' %}
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <span>{% trans 'Parece que aún no hay cuentas registradas' %}</span>
+        </div>
+    {% endif %}
+{% endblock content %}

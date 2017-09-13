@@ -1,0 +1,42 @@
+{% load i18n static humanize %}
+<style>
+.widget .panel-body { padding:0px; }
+.widget .list-group { margin-bottom: 0; }
+.widget .panel-title { display:inline }
+.widget .label-info { float: right; }
+.widget li.list-group-item {border-radius: 0;border: 0;border-top: 1px solid #ddd;}
+.widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
+.widget .mic-info { color: #666666;font-size: 11px; }
+.widget .action { margin-top:5px; }
+.widget .comment-text { font-size: 12px; }
+.widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
+</style>
+<ul class="list-group">
+    {% for element in list_comments %}
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-2">
+                    {% if  element.created_by.userprofile.image_profile %}
+                    <img src="{{ element.created_by.userprofile.image_profile.url }}" width="350px" height="350px" class="img-thumbnail img-fluid" alt=""/>
+                    {% else %}
+                        <i class="fa fa-user fa-3x"></i>
+                    {% endif %}
+                </div>
+                <div class="col-10">
+                    <div>
+                        <div class="mic-info">
+                            By: <a href="#">{{ element.created_by.first_name }} {{ element.created_by.last_name }}</a> {% trans 'Hace' %} {{ element.timestamp|timesince }}
+                        </div>
+                    </div>
+                    <div class="comment-text" style="height: 60px">
+                        <p> {{ element.comment }}</p>
+{#                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh#}
+{#                        euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim#}
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+
+
+</ul>

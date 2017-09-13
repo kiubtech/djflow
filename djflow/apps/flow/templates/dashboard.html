@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load i18n static humanize %}
+{% block title %}{% trans 'Dashboard' %}{% endblock %}
+{% block page-title %}{% trans 'Dashboard' %}{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+{% block add-button %}
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="margin-right: 10px">
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-plus"></i> {% trans 'Nuevo' %}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="{% url 'flow:transaction-new' %}"><i class="fa fa-exchange text-success"></i> {% trans 'Transacción' %}</a>
+                <a class="dropdown-item" href="{% url 'flow:account-new' %}"><i class="fa fa-credit-card text-info"></i> {% trans 'Cuenta' %}</a>
+                <a class="dropdown-item" href="{% url 'flow:category-new' %}"><i class="fa fa-tag text-primary"></i> {% trans 'Categoría' %}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <section class="row placeholders">
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-6 placeholder">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-thumbs-o-down text-danger"></i> {% trans 'Gastos por categoría' %}
+                </div>
+                <div class="card-block" style="padding: 0">
+                    <table class="table table-sm">
+                        <thead class="bg-danger">
+                        <tr>
+                            <th>{% trans 'Categoría' %}</th>
+                            <th></th>
+                            <th class="text-center">{% trans 'Monto' %}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for category in expense_categories %}
+                            <tr>
+                                <td align="left">{{ category.name }}</td>
+                                <td align="right">$</td>
+                                <td align="right">
+                                    {% if category.total_amount %}{{ category.total_amount|floatformat:2|intcomma }} {% else %}
+                                        0.00{% endif %}</td>
+                                <td align="left">[{{ category.transaction_set.count }}]</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-6 placeholder">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-check text-success"></i> {% trans 'Ingresos por categoría' %}
+                </div>
+                <div class="card-block" style="padding: 0">
+                    <table class="table table-sm">
+                        <thead class="bg-success">
+                        <tr>
+                            <th>{% trans 'Categoría' %}</th>
+                            <th></th>
+                            <th class="text-center">{% trans 'Monto' %}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for category in income_categories %}
+                            <tr>
+                                <td align="left">{{ category.name }}</td>
+                                <td align="right">$</td>
+                                <td align="right">
+                                    {% if category.total_amount %}{{ category.total_amount|floatformat:2|intcomma }} {% else %}
+                                        0.00{% endif %}</td>
+                                <td align="left">[{{ category.transaction_set.count }}]</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row placeholders">
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-6 placeholder">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-money"></i> {% trans 'Cuentas' %}
+                </div>
+                <div class="card-block" style="padding: 0">
+
+                    <table class="table table-sm">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>{% trans 'Cuenta' %}</th>
+                            <th></th>
+                            <th class="text-center">{% trans 'Saldo' %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for acct in accounts %}
+                            <tr>
+                                <td align="left">{{ acct.name }}</td>
+                                <td align="right">$</td>
+                                <td align="right">
+                                    {% if acct.total_amount %}{{ acct.total_amount|floatformat:2|intcomma }} {% else %}
+                                        0.00{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-transparent border-success"><a href="{% url 'flow:account-list' %}"
+                                                                          class="pull-right">{% trans 'Ver todos' %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-6 placeholder">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-clock-o"></i> {% trans 'Últimas transacciones' %}
+                </div>
+                <div class="card-block" style="padding: 0">
+
+                    <table class="table table-sm">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>{% trans 'Fecha' %}</th>
+                            <th>{% trans 'Cuenta' %}</th>
+                            <th></th>
+                            <th>{% trans 'Monto' %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for t in transactions %}
+                            <tr>
+                                <td align="left">{{ t.date | date:"SHORT_DATE_FORMAT" }} </td>
+                                <td align="left">{{ t.account }}</td>
+                                <td>$</td>
+                                <td align="right"
+                                    class="{% if t.amount > 0 %}text-success{% else %}text-danger{% endif %}"> {{ t.amount|floatformat:2|intcomma }}</td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-transparent border-success"><a href="{% url 'flow:transaction-list' %}"
+                                                                          class="pull-right">{% trans 'Ver todos' %}</a>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+{% endblock content %}

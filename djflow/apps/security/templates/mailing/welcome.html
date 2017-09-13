@@ -1,0 +1,19 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans 'Bienvenido' %}</title>
+</head>
+<body>
+<h3>{% trans '¡Hola' %} {{ new_user.first_name }} {{ new_user.last_name }}!</h3>
+<p><b>{{ user.get_full_name }}</b> {% trans 'te ha invitado a formar parte de su equipo de administración de Cashflow' %}</p>
+<hr>
+<p>{% trans 'Puedes ingresar a la plataforma con los siguientes datos' %}</p>
+<ul>
+    <li><b>{% trans 'Email' %}:</b> {{ new_user.email }}</li>
+    <li><b>{% trans 'Contraseña' %}:</b> {{ new_user_password }}</li>
+    <li><b>{% trans 'Link de acceso' %}:</b> {{ URL_SERVER }}</li>
+</ul>
+</body>
+</html>

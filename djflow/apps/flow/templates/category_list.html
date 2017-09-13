@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% block title %}{% trans 'Categorías' %}{% endblock %}
+{% block page-title %}{% trans 'Lista de Categorías' %}{% endblock %}
+{% block nav_category %}active{% endblock %}
+{% block add-button %}
+     <a href="{% url 'flow:category-new' %}" class="btn btn-outline-primary"><i class="fa fa-plus"></i> {% trans 'Nuevo' %}</a>
+{% endblock %}
+{% block content %}
+    {% if object_list %}
+        <table class="table table-sm">
+            <thead class="thead-inverse">
+            <tr>
+                <th>{% trans 'Nombre' %}</th>
+                <th>{% trans 'Tipo' %}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in object_list %}
+                <tr>
+                    <td><a href="{% url 'flow:category-edit' element.pk %}">{{ element.name }}</a></td>
+                    <td>
+                        {% if element.type == 0 %}
+                            {% trans 'Egreso' %}
+                        {% else %}
+                            {% trans 'Ingreso' %}
+                        {% endif %}
+                    </td>
+                    <td><a href="{% url 'flow:category-delete' element.pk %}" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-trash"></i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% include 'includes/paginator.html' with url_list='/flow/account/list/' %}
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <span>{% trans 'Parece que aún no hay categorías registradas' %}</span>
+        </div>
+    {% endif %}
+{% endblock content %}

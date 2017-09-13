@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load i18n static add_class %}
+{% block title %}{% trans 'Perfil' %}{% endblock %}
+{% block page-title %}{% trans 'Perfil de usuario' %}{% endblock %}
+{% block nav_cuentas %}active{% endblock %}
+{% block content %}
+    <form action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_first_name">{% trans 'Nombre(s)' %}</label>
+                    <input id="id_first_name" value="{{ user.first_name }}" name="first_name" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_last_name">{% trans 'Apellido(s)' %}</label>
+                    <input id="id_last_name" value="{{ user.last_name }}" name="last_name" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_email">{% trans 'Correo electrónico' %}</label>
+                    <input id="id_email" name="email" type="email" value="{{ user.email }}" class="form-control"
+                           required>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <div class="form-group">
+                    <label for="id_image_profile">{% trans 'Imagen de perfil' %}</label>
+                    <input id="id_image_profile" type="file" value="{{ user.first_name }}" name="image_profile"
+                           class="form-control">
+                    {% if user.userprofile.image_profile %}
+                        <small><a target="_blank"
+                                  href="{{ user.userprofile.image_profile.url }}">{% trans 'Ver actual' %}</a></small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="text-right">
+            <a href="{% url 'security:userprofile-change-password' %}" class="btn btn-secondary pull-left"><i class="fa fa-key"></i> {% trans 'Cambiar contraseña' %}</a>
+            <a href="{% url 'flow:dashboard' %}" class="btn btn-default">{% trans 'Regresar' %}</a>
+            <input class="btn btn-primary" type="submit" value="{% trans 'Guardar' %}">
+        </div>
+    </form>
+{% endblock content %}
