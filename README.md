@@ -67,6 +67,7 @@ Agradecemos enormemente el esfuerzo de las comunidades que mantienen el desarrol
 - [Pillow](https://github.com/python-pillow/Pillow)
 - [PostGreSQL](https://www.postgresql.org/)
 - [Psycopg2](https://github.com/psycopg/psycopg2)
+- [Django Tenant Schemas](https://github.com/bernardopires/django-tenant-schemas)
 - [Bootstrap v4](http://getbootstrap.com/)
 
 
