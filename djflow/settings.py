@@ -5,6 +5,7 @@ from .core.json_settings import get_settings
 from .core.staticfiles import *
 from .core.mediafiles import *
 from .core.mailserver import *
+from .core.databases import *
 
 settings = get_settings()
 
@@ -15,6 +16,7 @@ ALLOWED_HOSTS = settings['SECURITY']['ALLOWED_HOSTS']
 DATABASES = settings['DB']
 
 MIDDLEWARE = [
+    'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -43,3 +45,5 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djflow.wsgi.application'
 AUTH_PASSWORD_VALIDATORS = settings['AUTH_PASSWORD_VALIDATORS']
 LOGIN_URL = '/security/login/'
+
+TENANT_MODEL = "tenant.Client"  # modelo tenant.

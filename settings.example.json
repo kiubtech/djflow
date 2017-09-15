@@ -4,7 +4,7 @@
   "SECRET_KEY": "jcxw@ac_rkrm=r9pld6h7imz375wihv=7f+tm&u3^r02gk0dm!",
   "DB": {
     "default": {
-      "ENGINE": "django.db.backends.postgresql_psycopg2",
+      "ENGINE": "tenant_schemas.postgresql_backend",
       "HOST": "localhost",
       "NAME": "djflow",
       "USER": "admin",
