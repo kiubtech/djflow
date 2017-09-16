@@ -25,7 +25,7 @@
   ],
   "SECURITY": {
     "ALLOWED_HOSTS": [
-      "localhost"
+      ".localhost"
     ]
   },
   "DEBUG": true,
