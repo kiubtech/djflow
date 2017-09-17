@@ -32,6 +32,7 @@ class Category(models.Model):
 
     name = models.CharField(max_length=500)
     type = models.IntegerField(choices=TYPE_OPTIONS, default=1)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         if self.type == 0:
