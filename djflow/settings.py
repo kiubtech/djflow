@@ -6,6 +6,7 @@ from .core.staticfiles import *
 from .core.mediafiles import *
 from .core.mailserver import *
 from .core.databases import *
+from .core.logging import *
 
 settings = get_settings()
 

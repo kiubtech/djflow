@@ -9,8 +9,9 @@ from django.contrib import messages
 from djflow.apps import response_messages
 from .models import Account, Transaction, Category, TransactionComment
 from .forms import TransactionForm
+import logging
 
-
+logger = logging.getLogger(__name__)
 # =================================================================
 # Cuentas
 # =================================================================
@@ -42,6 +43,9 @@ class Dashboard(LoginRequiredMixin, View):
         return categories
 
     def get(self, request):
+        logger.info('info from view')
+        logger.debug("debug from view")
+        logger.error("error from view")
         number_of_registers = 5
         accounts_qs = Account.objects.filter(is_active=True).order_by('timestamp')[:number_of_registers]
         accounts_qs = accounts_qs.annotate(total_amount=Sum('transaction__amount'))
