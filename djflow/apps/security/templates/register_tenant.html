@@ -4,12 +4,18 @@
 {% block content %}
     <h1 class="cover-heading">Registro</h1><br>
     <div class="text-left">
+{% if not url_login_new_schema %}
     <form action="." method="post">
     {% csrf_token %}
+        {% if tenant_exist %}
+        <div class="alert alert-danger" role="alert">
+            {% trans 'Este subdominio ya existe. Por favor elija otro nombre' %}
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-10">
                 <label for="id_subdomain">Subdominio</label>
-                <input required class="form-control" name="subdomain" id="id_subdomain" placeholder="">
+                <input autofocus required class="form-control" name="subdomain" id="id_subdomain" placeholder="" value="{{ form_data.subdomain }}">
                 <small>* {% trans 'Nombre sin espacios ni caracteres especiales' %}</small>
             </div>
         </div>
@@ -17,7 +23,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-10">
                 <label for="id_email">Email</label>
-                <input required class="form-control" type="email" name="email" id="id_email">
+                <input required class="form-control" type="email" name="email" id="id_email" value="{{ form_data.email }}">
             </div>
         </div>
         <br>
@@ -35,5 +41,13 @@
             </div>
         </div>
     </form>
+{% else %}
+    <h3>{% trans '¡Felicidades!' %}</h3>
+    <p>
+        {% trans 'Tu cuenta ha sido creada correctamente' %}<br>
+        {% trans 'Haz clic en el siguiente botón para comenzar a disfrutar de los beneficios de djflow' %}
+    </p>
+    <a href="http://{{ url_login_new_schema }}" class="btn btn-success">{% trans 'Ingresar' %}</a>
+{% endif %}
     </div>
 {% endblock content %}

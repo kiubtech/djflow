@@ -16,6 +16,8 @@ from .functions import SecurityUtils
 from djflow.apps.general_functions import send_email
 from djflow.core.json_settings import get_settings
 from djflow.apps import response_messages
+from tenant_schemas.utils import schema_exists, schema_context
+from djflow.apps.tenant.models import Client
 
 settings = get_settings()
 
@@ -177,3 +179,41 @@ class TenantRegisterView(View):
 
     def get(self, request):
         return render(request, self.template_name, {'active_menu': self.active_menu})
+
+
+    def post(self, request):
+        kwargs = {
+            'active_menu': self.active_menu, 
+            'url_login_new_schema': None, 
+            'form_data': request.POST
+        }
+        tenant_name = request.POST.get('subdomain')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        if schema_exists(tenant_name):
+            kwargs['tenant_exist'] = True
+        else:
+            client = Client()
+            client.domain_url = '{0}.{1}'.format(tenant_name, request.tenant.domain_url)
+            client.name = tenant_name
+            client.schema_name = tenant_name
+            client.save()  # Ejecutar las migraciones
+            with schema_context(tenant_name):
+                user = User()
+                user.email = email
+                user.set_password(password)
+                user.is_active = True
+                user.is_superuser = True
+                user.save()
+            url_redirect = "{0}.{1}{2}".format(
+                tenant_name, request.META['HTTP_HOST'], reverse('security:login')
+                )
+            kwargs['tenant_exist'] = False
+            kwargs['url_login_new_schema'] = url_redirect
+        return render(request, self.template_name, kwargs)
+
+
+
+
+
+
