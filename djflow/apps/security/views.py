@@ -164,3 +164,16 @@ class ActiveInactiveUser(LoginRequiredMixin, View):
         except User.DoesNotExist:
             messages.error(request, _("Usuario no encontrado"))
         return HttpResponseRedirect(reverse_lazy('security:user-list'))
+
+
+# ===================================================
+# Registering Tenants
+# ===================================================
+
+
+class TenantRegisterView(View):
+    template_name = "register_tenant.html"
+    active_menu = "register"
+
+    def get(self, request):
+        return render(request, self.template_name, {'active_menu': self.active_menu})

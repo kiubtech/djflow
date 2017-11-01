@@ -1,0 +1,64 @@
+{% load i18n static solo_tags %}
+{% get_solo 'website.SiteConfiguration' as site_config %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+
+    <title>{{ site_config.site_name }}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'libs/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/cover.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+            <div class="masthead clearfix">
+                <div class="inner">
+                    <h3 class="masthead-brand"><a href="/">{{ site_config.site_name }}</a></h3>
+                    <nav class="nav nav-masthead">
+                        <a class="nav-link {% if active_menu != "register" %}active{% endif %}" href="{% url 'security:login' %}">{% trans 'Ingresar' %}</a>
+                        <a class="nav-link {% if active_menu == "register" %}active{% endif %}" href="{% url 'security:tenant-register' %}">{% trans 'Registrarse' %}</a>
+{#                        <a class="nav-link" href="#">Contact</a>#}
+                    </nav>
+                </div>
+            </div>
+{% block content %}
+
+
+                    <!-- content here -->
+
+            </div>
+            {% endblock content %}
+            <div class="mastfoot">
+                <div class="inner">
+                    <p>Powered by <a href="https://github.com/kiubtech/djflow"> Open Source Software</a>, writen by <a
+                            href="https://twitter.com/kiubtech/">@kiubtech</a>.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'libs/jquery/jquery-1.12.4.js' %}"></script>
+<script src="{% static 'libs/popper/popper.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'libs/ie10/ie10-viewport-bug-workaround.js' %}"></script>
+</body>
+</html>

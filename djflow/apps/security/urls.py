@@ -2,6 +2,7 @@ from django.conf.urls import url
 from .views import Login, Logout
 from .views import UserProfileData, UserList, UserNew, UserDelete
 from .views import ActiveInactiveUser, ChangePassword
+from .views import TenantRegisterView
 
 app_name = 'security'
 
@@ -14,5 +15,6 @@ urlpatterns = [
     url(r'^user/new/$', UserNew.as_view(), name="user-new"),
     url(r'^user/delete/(?P<pk>.*)/$', UserDelete.as_view(), name="user-delete"),
     url(r'^user/active-inactive/(?P<user_id>.*)/$', ActiveInactiveUser.as_view(), name="user-active-inactive"),
+    url(r'^tenant/register/$', TenantRegisterView.as_view(), name="tenant-register"),
 ]
 
