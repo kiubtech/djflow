@@ -213,7 +213,12 @@ class TenantRegisterView(View):
         return render(request, self.template_name, kwargs)
 
 
+class PreLoginView(View):
+    template_name = "pre_login.html"
+    active_menu = "login"
 
+    def get(self, request):
+        return render(request, self.template_name)
 
-
-
+    def post(self, request):
+        return request(request, self.template_name)
