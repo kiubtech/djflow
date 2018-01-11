@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="container">
+{% if request.tenant.schema_name != "public" %}
     <form class="form-signin" method="post" action=".">
 
              <img src="{% static 'img/cashflow.png' %}" class="img-responsive" style="display: block;margin: auto" alt="">
@@ -44,6 +45,16 @@
         <button class="btn btn-primary btn-block" type="submit">{% trans 'Ingresar' %}</button>
         <a href="/" class="btn-link pull-right"><small>{% trans 'Regresar' %}</small></a>
     </form>
+{% else %}
+    <form class="form-signin" method="get" action=".">
+        <img src="{% static 'img/cashflow.png' %}" class="img-responsive" style="display: block;margin: auto" alt="">
+        <h2 class="form-signin-heading text-center">{% trans 'Ingresar' %}</h2>
+        <p></p>
+        <label>{% trans 'Ingrese el nombre de su subdominio' %} {{ request.tenant.schema_name }}</label><br>
+        <input type="text" autofocus name="tenant_name" class="form-control" placeholder="{% trans '' %}"><br>
+        <button class="btn btn-primary btn-block" type="submit">{% trans 'Siguiente' %} ></button>
+    </form>
+{% endif %}
 </div> <!-- /container -->
 
 <script src="{% static 'libs/jquery/jquery-3.2.1.slim.min.js' %}"></script>

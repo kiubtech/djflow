@@ -27,6 +27,13 @@ class Login(View):
     form = LoginForm
 
     def get(self, request):
+        if request.GET.get('tenant_name', False) and schema_exists(request.GET.get('tenant_name')):
+            url_redirect = "http://{0}.{1}{2}".format(
+                request.GET.get('tenant_name'),
+                request.META['HTTP_HOST'],
+                reverse_lazy('security:login')
+            )
+            return HttpResponseRedirect(url_redirect)
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('flow:dashboard'))
         else:
@@ -53,7 +60,7 @@ class Logout(View):
 
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect(reverse_lazy('website:index'))
+        return HttpResponseRedirect(reverse_lazy('security:login'))
 
 
 class UserProfileData(LoginRequiredMixin, View):
