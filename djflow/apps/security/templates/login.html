@@ -21,7 +21,7 @@
         {% endif %}
         <!-- Email -->
         <label for="{{ form.email.id }}"> {{ form.email.label }}</label><br>
-        <input type="email" name="email" id="id_email" class="form-control" placeholder="{% trans 'Email' %}">
+        <input type="email" autofocus name="email" id="id_email" class="form-control" placeholder="{% trans 'Email' %}">
         {% if form.email.errors %}
             {% for error  in form.email.errors %}
                 <div>

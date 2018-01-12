@@ -28,7 +28,9 @@ class Login(View):
 
     def get(self, request):
         if request.GET.get('tenant_name', False) and schema_exists(request.GET.get('tenant_name')):
-            url_redirect = "http://{0}.{1}{2}".format(
+            protocol = "https" if settings['USE_SSL'] else "http"
+            url_redirect = "{0}://{1}.{2}{3}".format(
+                protocol,
                 request.GET.get('tenant_name'),
                 request.META['HTTP_HOST'],
                 reverse_lazy('security:login')
@@ -126,7 +128,14 @@ class UserNew(LoginRequiredMixin, View):
     utils = SecurityUtils()
 
     def send_welcome_mail(self, request, new_user, new_user_password):
-        ctx = {'user': request.user, 'new_user': new_user, 'new_user_password': new_user_password, 'URL_SERVER': settings['URL_SERVER']}
+        protocol = "https" if settings['USE_SSL'] else "http"
+        url_server = "{0}://{1}.{2}{3}".format(
+            protocol,
+            request.tenant.schema_name,
+            settings['BASE_URL'],
+            reverse_lazy("security:login")
+            )
+        ctx = {'user': request.user, 'new_user': new_user, 'new_user_password': new_user_password, 'URL_SERVER': url_server}
         html_content = render_to_string('mailing/welcome.html', ctx)
         subject = _("Bienvenido a Cashflow / invitación")
         send_email(subject, to_email=new_user.email, html_content=html_content)

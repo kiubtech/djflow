@@ -29,7 +29,8 @@
     ]
   },
   "DEBUG": true,
-  "URL_SERVER": "http://localhost:8000",
+  "USE_SSL": false,
+  "BASE_URL": "localhost:8000",
   "DEFAULT_URL_USERPROFILE": "/static/img/user-default.jpg",
   "LOGGING": {
     "DEBUG_PATH": "log/debug.log",
